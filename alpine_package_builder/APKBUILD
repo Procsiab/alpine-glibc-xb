@@ -1,11 +1,9 @@
-# Maintainer: SpectX DevOps <devops@spectx.com>
-
 pkgname="glibc"
 pkgver="${GLIBC_VERSION}"
 pkgrel="0"
 pkgdesc="GNU C Library compatibility layer"
 arch="${TARGETARCH}"
-url="https://github.com/lauri-nomme/alpine-glibc-xb"
+url="https://github.com/Procsiab/alpine-glibc-xb"
 license="LGPL"
 source="glibc-bin-${GLIBC_VERSION}.tar.gz
 nsswitch.conf
@@ -14,7 +12,7 @@ subpackages="$pkgname-bin $pkgname-dev $pkgname-i18n"
 triggers="$pkgname-bin.trigger=/lib:/usr/lib:/usr/glibc-compat/lib"
 
 package() {
-  mkdir -p "$pkgdir/lib" "$pkgdir/lib64" "$pkgdir/usr/glibc-compat/lib/locale" "$pkgdir/usr/glibc-compat/lib64" "$pkgdir/etc"
+  mkdir -p "$pkgdir/lib" "$pkgdir/usr/glibc-compat/lib/locale" "$pkgdir/usr/glibc-compat/lib64" "$pkgdir/etc"
   cp -a "$srcdir"/usr "$pkgdir"
   cp "$srcdir"/nsswitch.conf "$pkgdir"/etc/nsswitch.conf
   cp "$srcdir"/ld.so.conf "$pkgdir"/usr/glibc-compat/etc/ld.so.conf
@@ -29,7 +27,6 @@ package() {
   LINKER_NAME=$(basename "$pkgdir"/usr/glibc-compat/lib/ld-linux*)
   echo "Detected linker name: $LINKER_NAME"
   ln -s /usr/glibc-compat/lib/$LINKER_NAME "$pkgdir"/lib/$LINKER_NAME
-  ln -s /usr/glibc-compat/lib/$LINKER_NAME "$pkgdir"/lib64/$LINKER_NAME
   ln -s /usr/glibc-compat/lib/$LINKER_NAME "$pkgdir"/usr/glibc-compat/lib64/$LINKER_NAME
   ln -s /usr/glibc-compat/etc/ld.so.cache "$pkgdir"/etc/ld.so.cache
 }
@@ -39,7 +36,7 @@ bin() {
   mkdir -p "$subpkgdir"/usr/glibc-compat
   cp -a "$srcdir"/usr/glibc-compat/bin "$subpkgdir"/usr/glibc-compat
   # bash might not be installed on alpine, should override BASH_SHELL on glibc build
-  sed -i 's/\/usr\/bin\/bash/\/bin\/sh/g' "$subpkgdir"/usr/glibc-compat/bin/*
+  find "$subpkgdir"/usr/glibc-compat/bin -mindepth 1 ! -type l -exec sed -i 's/\/usr\/bin\/bash/\/bin\/sh/g' {} \;
   cp -a "$srcdir"/usr/glibc-compat/sbin "$subpkgdir"/usr/glibc-compat
 }
 
