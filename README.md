@@ -50,6 +50,10 @@ Note that this operation does not clean up the container image created with `bui
 
 ## Installing
 
+Copy the public key PUB file to the folder `/etc/apk/keys` on the target Alpine system, to allow installing the packages you signed with the private key generated before.
+
+If you prefer, allow the install of the untrusted package by adding the flag `--allow-untrusted` at the end of the install command below.
+
 Transfer the APK files from `apks/architecture` to the target Alpine installation, then run the following command (e.g. to install the main APK):
 
 ```bash
