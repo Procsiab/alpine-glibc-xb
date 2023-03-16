@@ -42,7 +42,7 @@ If your target architecture is different from your host's one, then you are runn
 - target `amd64`, build time *3m7s*
 - target `aarch64`, build time *27m33s*
 
-### APK artifacts
+### APK artefacts
 
 The Bash build script will also take care of copying the generated APK packages inside the folder `apks` in the local directory.
 
