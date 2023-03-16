@@ -8,7 +8,7 @@
 
 - The container tools `buildah` and `podman`, but you may also change the build Bash script to use other tools instead
 
-For the second point, in case you are using SELinux and Podman, run the following (thanks a lot user [nalid](https://github.com/nalind/fedora-qemu-user-static)):
+For the second point, in case you are using SELinux and Podman, run the following (thanks a lot user [nalind](https://github.com/nalind/fedora-qemu-user-static)):
 ```bash
 sudo podman run --rm --privileged -v /usr/local/bin -e BINDIR=/usr/local/bin -e CHCON="-t bin_t" ghcr.io/nalind/fedora-qemu-user-static register
 ```
